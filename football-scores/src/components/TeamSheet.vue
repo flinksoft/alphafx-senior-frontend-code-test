@@ -11,19 +11,24 @@
 
 <script>
 
+import axios from 'axios'
+
 export default {
     name: 'TeamSheet',
     data: function () {
         return {
-            teams: [{
-                id: '3097fe71-57da-4c84-8efd-33bb9bae9d21',
-                name: 'Benfica'
-            },
-            {
-                id: 2,
-                name: 'Chelsea FC'
-            }]
+            teams: []
         }
+    },
+    mounted() {
+        var headers = {
+            'Content-Type': 'application/json'
+        }
+
+        axios.post('https://alphafx-code-test-api.herokuapp.com/api/teams', null, {headers: headers})
+        .then((response) => {
+            this.teams = response.data.data;
+        })
     }
 }
 

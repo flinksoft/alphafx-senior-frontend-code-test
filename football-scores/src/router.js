@@ -12,21 +12,35 @@ export default new Router({
       component: Teams
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    },
-    {
       path: '/team/:id',
       name: 'team-info',
       component: () => import ('./components/TeamInfo.vue'),
+      props: true,
       props: (route) => ({
         id: route.params.id,
-        ...route.params
+        team: route.params.team
       })
-    }
+    },
+    {
+      path: '/team/:id/addgame',
+      name: 'add-team-game',
+      component: () => import ('./components/AddTeamGame.vue'),
+      props: true,
+      props: (route) => ({
+        id: route.params.teamId,
+        teamName: route.params.teamName
+      })
+    },
+    {
+      path: '/team/:id/player/:name',
+      name: 'player-history',
+      component: () => import ('./components/PlayerHistory.vue'),
+      props: true,
+      props: (route) => ({
+        id: route.params.id,
+        name: route.params.name
+      })
+    },
+    { path: "*", component:  () => import ('./views/PageNotFound.vue') }
   ]
 })
